@@ -1,0 +1,40 @@
+.App {
+  text-align: center;
+  background-color: white;
+}
+
+
+.App-header {
+  padding-top: 10px;
+  background-color: white;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.titleHeader{
+  display: flex;
+  width: 80%;
+  justify-content: center;
+}
+
+.textBlurb{
+  /* font-family: Tahoma, Geneva, Verdana, sans-serif; */
+  font-size: 15px!important;
+  /* padding-top: 10px; */
+}
+
+.icon{
+  align-self: right;
+  margin-top: 25px;
+  margin-right: 0px;
+  /* margin-left: auto; */
+}
+
+.title{
+  align-self: center;
+}
