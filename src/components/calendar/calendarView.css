@@ -13,10 +13,6 @@ td{
   border: 1px solid lightgray;
 }
 
-.calendar-day:hover {
-  background-color: lightgray;
-}
-
 .month {
   font-size: 25px;
 }
@@ -24,4 +20,12 @@ td{
 .week-day {
   padding-bottom: 10px;
   font-size: 20px;
+}
+
+.calendar-day.class-day {
+  border: 2px solid green;
+}
+
+.calendar-day.class-day:hover {
+  background-color: lightgreen;
 }
