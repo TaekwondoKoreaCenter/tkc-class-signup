@@ -1,0 +1,25 @@
+.rotate {
+  transform: rotate(45deg);
+}
+
+.unClicked {
+  /* transform: rotate(45deg); */
+  color: grey;
+}
+
+.MuiIButton-containedSecondary {
+  color:red !important;
+  border-color: red !important;
+}
+
+.MuiCard-root.cardClicked {
+  border: 2px solid #388e3c !important;
+}
+
+.MuiCard-root {
+  border: 1px solid darkgray !important;
+}
+
+.MuiFormControlLabel-label {
+  font-size: 12px !important;
+}

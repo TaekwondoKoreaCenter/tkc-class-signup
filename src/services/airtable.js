@@ -19,7 +19,9 @@ export default async function retrieveAllClasses(){
         'date': record.get('Date'),
         'name': record.get('Name'),
         'status': record.get('Status'),
-        'time': record.get('Time')
+        'time': record.get('Time'),
+        'className': record.get('Class Name'),
+        'classId': record.get('Class Type')
       }
       if (!(parsedDate in allClasses)){
         allClasses[parsedDate] = [];

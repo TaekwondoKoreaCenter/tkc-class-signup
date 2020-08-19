@@ -24,6 +24,10 @@ export default class CalendarView extends React.Component {
     }
   }
 
+  handleChosenClasses(classes){
+    this.props.chosenClasses(classes);
+  }
+
   render(){
     return (
       <div>
@@ -31,10 +35,10 @@ export default class CalendarView extends React.Component {
           {dateObject1.format("MMMM")}
         </h3>
         <table>
-          <thead className = 'week'>
+          <thead>
             <tr>{weekdayshortname}</tr>
           </thead>
-          {this.state.classes !== {} && <DaysInMonth classes = {this.props.classes}/>}
+          {this.state.classes !== {} && <DaysInMonth classes = {this.props.classes} chosenClasses = {(classes) => this.handleChosenClasses(classes)} />}
         </table>    
       </div>
     );

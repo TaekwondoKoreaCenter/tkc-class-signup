@@ -3,23 +3,26 @@
   background-color: white;
 }
 
-
-.App-header {
-  padding-top: 10px;
-  background-color: white;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: black;
+.MuiAppBar-root	 {
+  background-color: #1976d2 !important;
+  z-index: 1400 !important;
+  position: absolute;
 }
 
-.titleHeader{
-  display: flex;
-  width: 80%;
-  justify-content: center;
+.MuiTypography-h2 {
+  font-family: BebasNeue !important;
+  font-size: 4rem;
+  margin: 10px;
+  text-align: center !important;
+  margin-top: 15px !important;
+  flex-grow: 1;
+  align-self: center !important;
+  margin-left:203.73px !important;
+}
+
+.MuiButton-outlined	{
+  border-color: white !important;
+  color: white !important;
 }
 
 .textBlurb{
@@ -28,13 +31,9 @@
   /* padding-top: 10px; */
 }
 
-.icon{
-  align-self: right;
-  margin-top: 25px;
-  margin-right: 0px;
-  /* margin-left: auto; */
-}
 
-.title{
-  align-self: center;
+@font-face {
+  font-family: BebasNeue;
+  src: local('BebasNeue'), 
+    url(../fonts/BebasNeue-Regular.ttf) format('truetype');
 }

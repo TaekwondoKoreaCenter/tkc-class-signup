@@ -1,0 +1,14 @@
+
+.calendar-day.class-day {
+  border: 2px solid #388e3c;
+  background-color: #AED581;
+}
+
+.calendar-day.no-class {
+  background-color: lightgray;
+  border: 1px solid darkgray;
+}
+
+.calendar-day {
+  font-size: 20px !important;
+}
