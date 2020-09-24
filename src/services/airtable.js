@@ -1,5 +1,4 @@
 import airtable from 'airtable';
-import { register } from 'react-scroll/modules/mixins/scroller';
 
 let API_KEY = 'keySCoKA0j0MYnttj';
 

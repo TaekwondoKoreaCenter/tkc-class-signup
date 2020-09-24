@@ -41,7 +41,7 @@ export default class ClassTracker {
     let parsedDate = parseInt(date.split('-')[1]);
     //TODO: fix the math here
     let week = Math.floor((parsedDate + firstDayOfMonth()+1)/7) + 1;
-    // temp.push(classes[date]);
+
     if (!Object.keys(this.allAddedClassesByWeek).includes(week.toString())){
       this.allAddedClassesByWeek[week.toString()] = classes;
     } else {

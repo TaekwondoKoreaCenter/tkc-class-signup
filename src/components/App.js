@@ -8,10 +8,10 @@ import {
   AppBar,
   Typography,
   Snackbar,
-  Badge
+  Badge,
+  Toolbar
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
-import ToolBar from '@material-ui/core/ToolBar';
 import OpeningDialog from './openingDialog';
 import HelpIcon from '@material-ui/icons/Help';
 import IconButton from '@material-ui/core/IconButton';
@@ -145,7 +145,7 @@ export default class App extends React.Component {
       <div className="App">
         {/* <CssBaseline/> */}
         <AppBar position = 'sticky'> 
-          <ToolBar>
+          <Toolbar>
             <Typography align = 'center' variant = 'h2'>
               TKC Class Sign-Up
             </Typography>
@@ -157,7 +157,7 @@ export default class App extends React.Component {
                   Review and Register
               </WhiteButton>
             </Badge>
-          </ToolBar>
+          </Toolbar>
         </AppBar>        
         <div className = "textGen">
           <p className="textBlurb">
