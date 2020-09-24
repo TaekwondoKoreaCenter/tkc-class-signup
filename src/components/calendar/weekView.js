@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import './weekView.css';
-import Button from '@material-ui/core/Button';
 import DateButton from './dateButton';
 
 export default class DaysInMonth extends React.Component{
@@ -11,12 +10,6 @@ export default class DaysInMonth extends React.Component{
     this.state = {
       loaded: false
     }
-  }
-
-  componentDidUpdate(prevProps){
-    // if (this.props.classes !== prevProps){
-    //   this.setState({loaded:true});
-    // }
   }
 
   handleChosenClasses(classes){
@@ -59,7 +52,7 @@ export default class DaysInMonth extends React.Component{
       if (result.length > 0){
         daysInMonth.push(
           <td key={d} className={result[1].length > 0 ? "calendar-day class-day": "calendar-day no-class"} >
-            <DateButton onlyDate = {d} date = {result[0]} classesThisDay = {result[1]} dayOfWeek = {weekdayNames[((d-1) + currentWeekday) % 7]} chosenClasses={(classes) => this.handleChosenClasses(classes)} />
+            <DateButton onlyDate = {d} date = {result[0]} classesThisDay = {result[1]} dayOfWeek = {weekdayNames[((d-1) + currentWeekday) % 7]} chosenClasses={(classes) => this.handleChosenClasses(classes)} currentChosenClasses = {this.props.currentChosenClasses} />
           </td>
         );
       } else {

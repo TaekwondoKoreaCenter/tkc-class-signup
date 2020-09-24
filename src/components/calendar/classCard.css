@@ -14,6 +14,7 @@
 
 .MuiCard-root.cardClicked {
   border: 2px solid #388e3c !important;
+  background-color: #DCEDC8 !important;
 }
 
 .MuiCard-root {
@@ -22,4 +23,8 @@
 
 .MuiFormControlLabel-label {
   font-size: 12px !important;
+}
+
+.MuiTooltip-tooltip	{
+  font-size: 14px !important;
 }

@@ -38,7 +38,7 @@ export default class CalendarView extends React.Component {
           <thead>
             <tr>{weekdayshortname}</tr>
           </thead>
-          {this.state.classes !== {} && <DaysInMonth classes = {this.props.classes} chosenClasses = {(classes) => this.handleChosenClasses(classes)} />}
+          {this.state.classes !== {} && <DaysInMonth classes = {this.props.classes} chosenClasses = {(classes) => this.handleChosenClasses(classes)} currentChosenClasses = {this.props.currentChosenClasses} />}
         </table>    
       </div>
     );

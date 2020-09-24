@@ -3,12 +3,11 @@ import {
   Card,
   Grid,
   CardContent,
-  IconButton,
   Button,
   FormControlLabel,
-  Checkbox
+  Checkbox,
+  Tooltip
 } from '@material-ui/core';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import './classCard.css';
 
 
@@ -16,7 +15,7 @@ export default class ClassCard extends React.Component {
   constructor(props){
     super(props);
     this.state = ({
-      clicked: false
+      clicked: this.props.isChosen
     });
   }
 
@@ -30,26 +29,27 @@ export default class ClassCard extends React.Component {
 
   render(){
     const session = this.props.session;
+    const dayOfWeek = this.props.dayOfWeek;
     const {clicked} = this.state;
 
     return(
       <Card className = {clicked? 'cardClicked': 'cardUnClicked'}>
         <CardContent>
           <div className = 'cardHeader'>
-            {session['className'] + ''}
+            {session['className'] + ' (' + session['time'][0].toString() + ')'}
           </div>
           <Grid container direction='row' justify='space-between'>
             <Grid item>
-              <div className = 'classTime'>
-                {session['time'][0].toString()}
-              </div>
               <div className = 'classStatus'>
                 {'Capacity: ' + session['status'] + "/10"}
               </div>
-              <FormControlLabel
-              control={<Checkbox name="checkedA" />}
-              label="Add class for the entire month"
-            />
+              <Tooltip arrow = {true} title = {"Add all available " + dayOfWeek.toString() + " (" + session['time'][0].toString() + ") " + session['className'] + "es"}>
+                <FormControlLabel
+                  value={1}
+                  control={<Checkbox name="checkedA" />}
+                  label="Add for month"
+                />
+              </Tooltip>
             </Grid>
             
             <Grid item>

@@ -2,18 +2,11 @@ import React from 'react';
 import {
   Drawer,
   Button,
-  Card,
-  Paper,
-  Grid,
-  CardContent,
-  IconButton,
   Toolbar,
   CssBaseline
 } from '@material-ui/core';
 import './dateButton.css';
 import ClassCard from './classCard';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import Typography from 'material-ui/styles/typography';
 
 export default class DateButton extends React.Component{
   constructor(props){
@@ -21,15 +14,28 @@ export default class DateButton extends React.Component{
     this.state = {
       drawerOpen: false,
       date: props.date,
-      addedClasses: []
+      addedClasses: [],
+      updated: false
     };
     this.handleAddClass = this.handleAddClass.bind(this);
     this.handleChosenClasses = this.handleChosenClasses.bind(this);
   }
+
+  componentWillMount(){
+  }
   
   handleOpen(){
+    if (this.props.currentChosenClasses !== undefined){
+      console.log("HEELOOO: " + JSON.stringify(this.props.currentChosenClasses));
+      console.log("hello: " + this.props.currentChosenClasses[this.props.date]);
+      console.log('date: ' + this.props.date);
+
+    } else {
+      console.log("not reaching");
+    }
     this.setState({
-      drawerOpen: true
+      drawerOpen: true,
+      addedClasses: (this.props.currentChosenClasses !== {} && Object.keys(this.props.currentChosenClasses).includes(this.props.date))? this.props.currentChosenClasses[this.props.date] : []
     });
   }
 
@@ -48,30 +54,58 @@ export default class DateButton extends React.Component{
   }
 
   handleChosenClasses(){
-    console.log("DATEBUTTON");
-    this.props.chosenClasses(this.state.addedClasses);
+    let result = {};
+
+    console.log('ADDED CLASSES: ' + this.state.addedClasses);
+
+    result[this.props.date] = this.state.addedClasses;
+
+    console.log("RETURNING: " + JSON.stringify(result));
+
+    this.props.chosenClasses(result);
+    this.setState({
+      drawerOpen: false
+    });
   }
+
+  // handleAddClass(classToggle){
+  //   let updatedClasses = [];
+  //   if (classToggle['clicked']){
+  //     if (this.state.addedClasses.includes(classToggle['classId'])) {
+  //       updatedClasses.push(classToggle['classId']);
+  //     } 
+  //   }
+  // }
 
   handleAddClass(classToggle){
     if (!classToggle['clicked']){
       let newlyRemoved = [];
       this.state.addedClasses.forEach((item) => {
-        if (item !== classToggle['classId'][0]){
+        if (item !== classToggle['classId']){
+          console.log("item: " + item);
+          console.log(classToggle['classId']);
           newlyRemoved.push(item);
         }
       });
+      console.log("newly removed: " + newlyRemoved);
+      let flag = newlyRemoved.length < this.state.addedClasses.length;
       this.setState(
         {
-          addedClasses: newlyRemoved
+          ...this.state,
+          addedClasses: newlyRemoved,
+          updated: flag
         }
       )
     } else {
-      let newlyAdded = this.state.addedClasses.concat(classToggle['classId']);
-      this.setState(
-        {
-          addedClasses: newlyAdded
-        }
-      )
+      if (!this.state.addedClasses.includes(classToggle['classId'])){
+        let newlyAdded = this.state.addedClasses.concat(classToggle['classId']);
+        this.setState(
+          {
+            ...this.state,
+            addedClasses: newlyAdded
+          }
+        )
+      }
     }
   }
 
@@ -79,6 +113,7 @@ export default class DateButton extends React.Component{
     const classes = this.props.classesThisDay;
     const dayOfWeek = this.props.dayOfWeek;
     const date = this.formatDate();
+    const updated = this.state.updated;
 
     return(
       <div className = 'button'>
@@ -97,24 +132,28 @@ export default class DateButton extends React.Component{
               // eslint-disable-next-line no-unused-expressions
               return(
               <div className= 'classCardContainer'>
-                <ClassCard session = {session} chosenClass = {(item) =>this.handleAddClass(item)}/>
+                <ClassCard session = {session} chosenClass = {(item) =>this.handleAddClass(item)} dayOfWeek = {dayOfWeek} isChosen = {this.state.addedClasses.includes(session['classId'])}/>
               </div>)
             })
             }
             </div>
           </div>
           <div>
-            {this.state.addedClasses.length === 0?  
-              <Button variant='contained' disabled>
-                Add Class
+            {updated?
+              <Button variant='contained' color='primary' onClick= {this.handleChosenClasses}>
+                Update
               </Button> :
-              (this.state.addedClasses.length === 1?
-                <Button variant='contained' color='primary' onClick = {this.handleChosenClasses}>
+              this.state.addedClasses.length === 0?  
+                <Button variant='contained' disabled>
                   Add Class
                 </Button> :
-                <Button variant='contained' color='primary' onClick = {this.handleChosenClasses}>
-                    Add {this.state.addedClasses.length} Classes
-                </Button>)
+                (this.state.addedClasses.length === 1?
+                  <Button variant='contained' color='primary' onClick = {this.handleChosenClasses}>
+                    Add Class
+                  </Button> :
+                  <Button variant='contained' color='primary' onClick = {this.handleChosenClasses}>
+                      Add {this.state.addedClasses.length} Classes
+                  </Button>)
             }
           </div>
         </Drawer>

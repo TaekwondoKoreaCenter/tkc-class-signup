@@ -20,15 +20,14 @@
   margin-left:203.73px !important;
 }
 
-.MuiButton-outlined	{
-  border-color: white !important;
-  color: white !important;
-}
-
 .textBlurb{
   /* font-family: Tahoma, Geneva, Verdana, sans-serif; */
   font-size: 15px!important;
   /* padding-top: 10px; */
+}
+
+.helpIcon {
+  color: white !important;
 }
 
 

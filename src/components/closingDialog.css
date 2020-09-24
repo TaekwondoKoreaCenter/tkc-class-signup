@@ -1,0 +1,16 @@
+.subItem{
+  padding-left: 32px !important;
+}
+
+.dialogContentWrapper{
+  padding-left: 25%;
+  padding-right: 25%;
+  padding-top: 72px;
+  align-content: center;
+  justify-content: center;
+}
+
+.MuiButton-outlined	.blueButton{
+  border-color:  #1976d2 !important;
+  color: #1976d2 !important;
+}
