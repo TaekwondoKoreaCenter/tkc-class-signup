@@ -28,8 +28,6 @@ export async function retrieveAllClasses(studentType){
   let allClasses = {};
   let classMappings = {};
 
-  console.log(studentType);
-
   allClasses['dates'] = [];
 
   let availableClasses;
@@ -66,17 +64,12 @@ export async function retrieveAllClasses(studentType){
       }
       
     });
-    console.log(JSON.stringify(allClasses));
 
     fetchNextPage();
   });
 
   return {'allClasses': allClasses, 'classMappings': classMappings}
 }
-
-// "to_email": '',
-// "name": '',
-// "student_type": ''
 
 export async function registerStudent(registerData){
   await base('Students').create([

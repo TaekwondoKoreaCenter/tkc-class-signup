@@ -28,8 +28,6 @@ export default class ClassTracker {
 
   validateClassesAdded(classes) {
     let date = Object.keys(classes)[0];
-    console.log("ALL ADDED CLASSES BY WEEK: " + JSON.stringify(this.allAddedClassesByWeek));
-
     let dateObject1 = moment();
   
     let firstDayOfMonth = () => {
@@ -40,15 +38,13 @@ export default class ClassTracker {
   
     let parsedDate = parseInt(date.split('-')[1]);
     //TODO: fix the math here
-    let week = Math.floor((parsedDate + firstDayOfMonth()+1)/7) + 1;
+    let week = Math.floor((parsedDate + firstDayOfMonth())/7) + 1;
 
     if (!Object.keys(this.allAddedClassesByWeek).includes(week.toString())){
       this.allAddedClassesByWeek[week.toString()] = classes;
     } else {
-      let temp = this.allAddedClassesByWeek[week.toString()];
+      let temp = {...this.allAddedClassesByWeek[week.toString()]};
       temp[date] = classes[date];
-
-      console.log("TEMP: " + JSON.stringify(temp));
 
       let count = 0;
       Object.keys(temp).forEach((date)=> {
@@ -58,7 +54,7 @@ export default class ClassTracker {
       if (count > this.classLimit) {
         return false;
       } else {
-        this.allAddedClassesByWeek[week.toString()].date = classes[date];
+        this.allAddedClassesByWeek[week.toString()] = temp;
       }
     }
     return classes;

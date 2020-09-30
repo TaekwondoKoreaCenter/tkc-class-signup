@@ -20,22 +20,12 @@ export default class DateButton extends React.Component{
     this.handleAddClass = this.handleAddClass.bind(this);
     this.handleChosenClasses = this.handleChosenClasses.bind(this);
   }
-
-  componentWillMount(){
-  }
   
   handleOpen(){
-    if (this.props.currentChosenClasses !== undefined){
-      console.log("HEELOOO: " + JSON.stringify(this.props.currentChosenClasses));
-      console.log("hello: " + this.props.currentChosenClasses[this.props.date]);
-      console.log('date: ' + this.props.date);
-
-    } else {
-      console.log("not reaching");
-    }
     this.setState({
       drawerOpen: true,
-      addedClasses: (this.props.currentChosenClasses !== {} && Object.keys(this.props.currentChosenClasses).includes(this.props.date))? this.props.currentChosenClasses[this.props.date] : []
+      addedClasses: (this.props.currentChosenClasses !== {} && Object.keys(this.props.currentChosenClasses).includes(this.props.date))? this.props.currentChosenClasses[this.props.date] : [],
+      updated: false
     });
   }
 
@@ -55,39 +45,22 @@ export default class DateButton extends React.Component{
 
   handleChosenClasses(){
     let result = {};
-
-    console.log('ADDED CLASSES: ' + this.state.addedClasses);
-
     result[this.props.date] = this.state.addedClasses;
-
-    console.log("RETURNING: " + JSON.stringify(result));
-
     this.props.chosenClasses(result);
     this.setState({
       drawerOpen: false
     });
   }
 
-  // handleAddClass(classToggle){
-  //   let updatedClasses = [];
-  //   if (classToggle['clicked']){
-  //     if (this.state.addedClasses.includes(classToggle['classId'])) {
-  //       updatedClasses.push(classToggle['classId']);
-  //     } 
-  //   }
-  // }
 
   handleAddClass(classToggle){
     if (!classToggle['clicked']){
       let newlyRemoved = [];
       this.state.addedClasses.forEach((item) => {
         if (item !== classToggle['classId']){
-          console.log("item: " + item);
-          console.log(classToggle['classId']);
           newlyRemoved.push(item);
         }
       });
-      console.log("newly removed: " + newlyRemoved);
       let flag = newlyRemoved.length < this.state.addedClasses.length;
       this.setState(
         {
@@ -102,7 +75,8 @@ export default class DateButton extends React.Component{
         this.setState(
           {
             ...this.state,
-            addedClasses: newlyAdded
+            addedClasses: newlyAdded,
+            updated: true
           }
         )
       }
@@ -139,21 +113,14 @@ export default class DateButton extends React.Component{
             </div>
           </div>
           <div>
-            {updated?
-              <Button variant='contained' color='primary' onClick= {this.handleChosenClasses}>
-                Update
-              </Button> :
-              this.state.addedClasses.length === 0?  
+            {
+              !updated?  
                 <Button variant='contained' disabled>
-                  Add Class
+                  Confirm
                 </Button> :
-                (this.state.addedClasses.length === 1?
                   <Button variant='contained' color='primary' onClick = {this.handleChosenClasses}>
-                    Add Class
-                  </Button> :
-                  <Button variant='contained' color='primary' onClick = {this.handleChosenClasses}>
-                      Add {this.state.addedClasses.length} Classes
-                  </Button>)
+                    Confirm
+                  </Button> 
             }
           </div>
         </Drawer>

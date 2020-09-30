@@ -38,7 +38,6 @@ export default class ClosingDialog extends React.Component {
   }
 
   handleRegister(){
-    console.log(JSON.stringify(this.state.information));
     registerStudent({'studentData': this.state.information, 'chosenClasses': this.state.finalClasses});
   }
 
@@ -80,6 +79,7 @@ export default class ClosingDialog extends React.Component {
               Verify the classes you would like to add, and uncheck the classes you want to remove. 
             </DialogContentText>
             <List>
+             {/* eslint-disable-next-line */}
               {dates.map((date) => {
                 if (this.props.currentChosenClasses[date].length !== 0){
                   return(

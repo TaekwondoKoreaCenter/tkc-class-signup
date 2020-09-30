@@ -20,7 +20,6 @@ import ClosingDialog from './closingDialog';
 import { withStyles} from '@material-ui/core/styles';
 import { white } from 'material-ui/styles/colors';
 
-// import { makeStyles } from '@material-ui/core/styles';
 const WhiteButton = withStyles((theme) => ({
   root: {
     color: white,
@@ -31,6 +30,7 @@ const WhiteButton = withStyles((theme) => ({
     borderColor: white
   },
 }))(Button);
+
 export default class App extends React.Component {
   constructor(props){
     super(props);
@@ -43,16 +43,13 @@ export default class App extends React.Component {
       closingDialogOpen: false,
       classMappings: {},
       errorCaught: false,
-      totalClassCount: []
+      totalClassCount: [],
+      addSuccess: false
     }
     this.classTracker = new ClassTracker();
     this.renderClosingDialog = this.renderClosingDialog.bind(this);
     this.handleErrorClose = this.handleErrorClose.bind(this);
-  }
-
-  componentDidMount(){
-    // this.retrieveClassData();
-    // retrieveClassTypes();
+    this.handleSuccessClose = this.handleSuccessClose.bind(this);
   }
 
   retrieveClassData(studentData){
@@ -63,20 +60,18 @@ export default class App extends React.Component {
           isLoading: false,
           classMappings: data['classMappings']
       });
-      console.log(JSON.stringify(data['classMappings']));
     });
   }
 
-  handleChosenClasses(classes) {
-    console.log("chosen classes: " + this.state.currentChosenClasses);
-    
+  handleChosenClasses(classes) {    
     try {
       let result = this.classTracker.updateClasses(classes);
       let total = this.classTracker.getTotalClasses();
       this.setState({
         ...this.state,
         currentChosenClasses: result,
-        totalClassCount: total
+        totalClassCount: total,
+        addSuccess: true
       });
     } catch (e) {
       console.log('error caught');
@@ -95,6 +90,13 @@ export default class App extends React.Component {
     this.setState({
       ...this.state,
       errorCaught: false
+    });
+  }
+
+  handleSuccessClose(){
+    this.setState({
+      ...this.state,
+      addSuccess: false
     });
   }
 
@@ -143,20 +145,24 @@ export default class App extends React.Component {
   render(){
     return (
       <div className="App">
-        {/* <CssBaseline/> */}
         <AppBar position = 'sticky'> 
           <Toolbar>
+            {/* <Typography align = 'left' variant = 'h6'>
+              {this.state.studentInfo['name']}
+            </Typography> */}
             <Typography align = 'center' variant = 'h2'>
               TKC Class Sign-Up
             </Typography>
             <IconButton>
               <HelpIcon className = 'helpIcon'/>
             </IconButton>
-            <Badge badgeContent={this.state.totalClassCount.length} color="secondary" invisible ={this.state.totalClassCount.length === 0}>
-              <WhiteButton variant = 'outlined' className = 'reviewButton' onClick = {this.renderClosingDialog}>
-                  Review and Register
-              </WhiteButton>
-            </Badge>
+            {/* { !this.state.closingDialogOpen && */}
+              <Badge badgeContent={this.state.totalClassCount.length} color="secondary" invisible ={this.state.totalClassCount.length === 0}>
+                <WhiteButton variant = 'outlined' className = 'reviewButton' onClick = {this.renderClosingDialog}  disabled={this.state.totalClassCount.length === 0}>
+                    Review and Register
+                </WhiteButton>
+              </Badge>
+            {/* }  */}
           </Toolbar>
         </AppBar>        
         <div className = "textGen">
@@ -168,6 +174,12 @@ export default class App extends React.Component {
         <Snackbar open={this.state.errorCaught} autoHideDuration={6000} onClose={this.handleErrorClose} >
           <MuiAlert variant='filled' onClose={this.handleErrorClose} severity="error">
             Too many classes added! You can add up to {this.state.studentInfo['student_type'] === 'bbc'? 3 : 2} classes for each week.
+          </MuiAlert>
+        </Snackbar>
+
+        <Snackbar open={this.state.addSuccess} autoHideDuration={1000} onClose={this.handleSuccessClose} >
+          <MuiAlert variant='filled' onClose={this.handleSuccessClose} severity="success">
+            Successfully updated!
           </MuiAlert>
         </Snackbar>
 

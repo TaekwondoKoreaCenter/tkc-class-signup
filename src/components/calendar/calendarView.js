@@ -18,12 +18,6 @@ export default class CalendarView extends React.Component {
     classes : this.props.classes
   }
 
-  componentDidUpdate(prevProps){
-    if (this.props.classes !== prevProps){
-      // this.setState({classes : this.props.classes});
-    }
-  }
-
   handleChosenClasses(classes){
     this.props.chosenClasses(classes);
   }
