@@ -4,9 +4,9 @@ import {
   Grid,
   CardContent,
   Button,
-  FormControlLabel,
-  Checkbox,
-  Tooltip
+  // FormControlLabel,
+  // Checkbox,
+  // Tooltip
 } from '@material-ui/core';
 import './classCard.css';
 
@@ -29,7 +29,7 @@ export default class ClassCard extends React.Component {
 
   render(){
     const session = this.props.session;
-    const dayOfWeek = this.props.dayOfWeek;
+    // const dayOfWeek = this.props.dayOfWeek;
     const {clicked} = this.state;
 
     return(
@@ -43,13 +43,13 @@ export default class ClassCard extends React.Component {
               <div className = 'classStatus'>
                 {'Capacity: ' + session['status'] + "/10"}
               </div>
-              <Tooltip arrow = {true} title = {"Add all available " + dayOfWeek.toString() + " (" + session['time'][0].toString() + ") " + session['className'] + "es"}>
+              {/* <Tooltip arrow = {true} title = {"Add all available " + dayOfWeek.toString() + " (" + session['time'][0].toString() + ") " + session['className'] + "es"}>
                 <FormControlLabel
                   value={1}
                   control={<Checkbox name="checkedA" />}
                   label="Add for month"
                 />
-              </Tooltip>
+              </Tooltip> */}
             </Grid>
             
             <Grid item>

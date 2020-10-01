@@ -14,3 +14,11 @@
   border-color:  #1976d2 !important;
   color: #1976d2 !important;
 }
+
+.MuiListItemText-primary{
+  font-weight: bold !important;
+}
+
+.MuiListItemText-secondary{
+  color:black !important;
+}

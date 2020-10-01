@@ -12,21 +12,25 @@ import {
   Toolbar,
   ListItemText,
   ListItemSecondaryAction,
-  Checkbox
+  Checkbox,
+  CircularProgress,
+  Typography
 } from '@material-ui/core';
 import './closingDialog.css';
 import {registerStudent} from '../services/airtable';
+import moment from 'moment';
 
 
 export default class ClosingDialog extends React.Component {
   constructor(props){
     super(props);
     this.state = ({
-      finished: false,
+      finishedRegister: false,
       open: this.props.open,
       information: this.props.studentData,
-      chosenClasses: this.props.currentChosenClasses,
-      finalClasses: this.props.totalClasses
+      chosenClasses: {},
+      finalClasses: this.props.totalClasses,
+      isLoading: false
     });
     this.handleClose = this.handleClose.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
@@ -38,7 +42,46 @@ export default class ClosingDialog extends React.Component {
   }
 
   handleRegister(){
-    registerStudent({'studentData': this.state.information, 'chosenClasses': this.state.finalClasses});
+    this.setLoading();
+    this.updateChosenClasses();
+    registerStudent({'studentData': this.state.information, 'chosenClasses': this.state.finalClasses}).then(() => {
+      this.setState({
+        ...this.state,
+        finishedRegister: true,
+        isLoading: false
+      });
+    });
+  }
+
+  updateChosenClasses(){
+    let dates = Object.keys(this.props.currentChosenClasses);
+    let tempDict = {};
+    let temptemp = {...this.props.currentChosenClasses};
+
+    dates.forEach((date) => {
+      let pickedClasses = [];
+
+      temptemp[date].forEach((record) => {
+        if (this.state.finalClasses.includes(record)){
+          pickedClasses.push(record);
+        }
+      });
+
+      if (pickedClasses.length !== 0){
+        tempDict[date] = pickedClasses;
+      }
+    });
+
+    this.setState({
+      ...this.state,
+      chosenClasses: tempDict
+    });
+  }
+
+  setLoading(){
+    this.setState({
+      isLoading: true
+    })
   }
 
   handleToggle(recordId){
@@ -63,6 +106,26 @@ export default class ClosingDialog extends React.Component {
     }
   }
 
+  getParsedDay(dateString){
+    let weekdayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  
+    let firstDayOfMonth = () => {
+      let dateObject = moment().dateObject;
+      let firstDay = moment(dateObject).startOf('month').format('d');
+      return parseInt(firstDay);
+    }
+
+    let firstWeekday = parseInt(firstDayOfMonth(), 10);
+    let parsedDate = parseInt(dateString.split('-')[1]);
+    let str = dateString.replace('-','/');
+    while(str.charAt(0) === '0'){
+      str = str.substring(1);
+    }
+
+    console.log(weekdayNames[((parsedDate-1) + firstWeekday) % 7] + ' ' + str);
+    return (weekdayNames[((parsedDate-1) + firstWeekday) % 7] + ' ' + str);
+  }
+
   render(){
     let dates = Object.keys(this.props.currentChosenClasses);
     dates.sort();
@@ -71,52 +134,96 @@ export default class ClosingDialog extends React.Component {
       <div>
         <Toolbar className='drawerTop'/>
         <Dialog fullScreen = {true} open={this.state.open} aria-labelledby="form-dialog-title">
-          {console.log(JSON.stringify(this.props.classMappings))}
-          <div className = 'dialogContentWrapper'>
-          <DialogTitle id="form-dialog-closing">Review and Register</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Verify the classes you would like to add, and uncheck the classes you want to remove. 
-            </DialogContentText>
-            <List>
-             {/* eslint-disable-next-line */}
-              {dates.map((date) => {
-                if (this.props.currentChosenClasses[date].length !== 0){
-                  return(
-                    <div>
-                      <ListItem>
-                        <ListItemText primary = {date}/>
-                      </ListItem>
-                      {this.props.currentChosenClasses[date].map((currClass) => {
-                        return (
-                          <List disablePadding >
-                            <ListItem className='subItem'>
-                              <ListItemText primary = {this.props.classMappings[currClass]} />
-                              <ListItemSecondaryAction>
-                                <Checkbox
-                                  edge="end"
-                                  onChange={() => this.handleToggle(currClass)}
-                                  checked={this.state.finalClasses.includes(currClass)}
-                                />
-                              </ListItemSecondaryAction>
+            {!this.state.finishedRegister && 
+              <div className = 'dialogContentWrapper'>
+
+                <DialogTitle id="form-dialog-closing">Review and Register</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Verify the classes you would like to add, and uncheck the classes you want to remove. 
+                  </DialogContentText>
+                  <List>
+                  {/* eslint-disable-next-line */}
+                    {dates.map((date) => {
+                      let parsedWeekday = this.getParsedDay(date);
+                      if (this.props.currentChosenClasses[date].length !== 0){
+                        return(
+                          <div>
+                            <ListItem>
+                              <ListItemText dense={true} primary = {parsedWeekday}/>
                             </ListItem>
-                          </List>)
-                      })}
-                      <Divider component="li" />
-                    </div>
-                  );
-                }
-              })}
-            </List>
-          </DialogContent>
-          <DialogActions>
-            <Button variant = 'outlined' color="primary" onClick={this.handleClose}>
-              Go Back
-            </Button>
-            <Button variant = 'contained' onClick={this.handleRegister} color="primary">
-              Register
-            </Button>
-          </DialogActions>
+                            {this.props.currentChosenClasses[date].map((currClass) => {
+                              return (
+                                <List disablePadding >
+                                  <ListItem className='subItem'>
+                                    <ListItemText secondary = {this.props.classMappings[currClass]} />
+                                    <ListItemSecondaryAction>
+                                      <Checkbox
+                                        edge="end"
+                                        onChange={() => this.handleToggle(currClass)}
+                                        checked={this.state.finalClasses.includes(currClass)}
+                                      />
+                                    </ListItemSecondaryAction>
+                                  </ListItem>
+                                </List>)
+                            })}
+                            <Divider component="li" />
+                          </div>
+                        );
+                      }
+                    })}
+                  </List>
+                </DialogContent>
+                <DialogActions>
+                  <Button variant = 'outlined' color="primary" onClick={this.handleClose}>
+                    Go Back
+                  </Button>
+                  <Button variant = 'contained' onClick={this.handleRegister} color="primary">
+                    Register
+                  </Button>
+                </DialogActions> 
+              </div>
+            }
+            {this.state.finishedRegister && 
+              <div className = 'dialogContentWrapper'>
+                <DialogTitle id="form-dialog-finish-register">Thank You for Registering</DialogTitle>
+                <DialogContent>
+                  <Typography variant='body1'>
+                    You have signed up for:
+                  </Typography>
+                  <List>
+                    {/* eslint-disable-next-line */}
+                    {Object.keys(this.state.chosenClasses).sort().map((date) => {
+                      let parsedWeekday = this.getParsedDay(date);
+                      if (this.state.chosenClasses[date].length !== 0){
+                        return(
+                          <div>
+                            <ListItem>
+                              <ListItemText primary = {parsedWeekday}/>
+                            </ListItem>
+                            {/* eslint-disable-next-line */}
+                            {this.state.chosenClasses[date].map((currClass) => {
+                                return (
+                                  <List disablePadding >
+                                    <ListItem className='subItem'>
+                                      <ListItemText secondary = {this.props.classMappings[currClass]} />
+                                    </ListItem>
+                                  </List>)
+                            })}
+                            <Divider component="li" />
+                          </div>
+                        );
+                      }
+                    })}
+                  </List>
+                  <Typography variant='body1'>
+                    Check email for your confirmation. <b>COVID-19 Notice:</b> Every student and parent entering our dojang will be required to wear a mask over nose and mouth and be temperature checked for the safety of fellow students, parents, and staff.
+                  </Typography>
+                </DialogContent>
+              </div>
+            }
+          <div>
+            {this.state.isLoading? <CircularProgress /> : null}
           </div>
         </Dialog>
       </div>

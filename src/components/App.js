@@ -135,7 +135,6 @@ export default class App extends React.Component {
   }
 
   renderClosingDialog() {
-    console.log("helloooooooo closing dialog");
     this.setState({
       ...this.state,
       closingDialogOpen: true
@@ -157,19 +156,21 @@ export default class App extends React.Component {
               <HelpIcon className = 'helpIcon'/>
             </IconButton>
             {/* { !this.state.closingDialogOpen && */}
-              <Badge badgeContent={this.state.totalClassCount.length} color="secondary" invisible ={this.state.totalClassCount.length === 0}>
-                <WhiteButton variant = 'outlined' className = 'reviewButton' onClick = {this.renderClosingDialog}  disabled={this.state.totalClassCount.length === 0}>
+              <Badge badgeContent={this.state.totalClassCount.length} color="secondary" invisible ={this.state.totalClassCount.length === 0 || this.state.closingDialogOpen}>
+                <WhiteButton variant = 'outlined' className = 'reviewButton' onClick = {this.renderClosingDialog}  disabled={this.state.totalClassCount.length === 0 || this.state.closingDialogOpen}>
                     Review and Register
                 </WhiteButton>
               </Badge>
             {/* }  */}
           </Toolbar>
-        </AppBar>        
+        </AppBar>  
+
+        {this.state.finishedSignin  &&
         <div className = "textGen">
           <p className="textBlurb">
-            Please select your desired classes below and click Review and Register at the right top to complete registration.
+          Please choose desired dates, classes, and click Review and Register at the right top to complete registration. If you have a question or concern, please submit without conflicting classes and contact us at (630) 708-3132 or info@TKCUSA.com.
           </p>
-        </div>
+        </div>}
 
         <Snackbar open={this.state.errorCaught} autoHideDuration={6000} onClose={this.handleErrorClose} >
           <MuiAlert variant='filled' onClose={this.handleErrorClose} severity="error">
