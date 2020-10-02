@@ -62,7 +62,6 @@ export default class DaysInMonth extends React.Component{
           </td>
         );
       }
-      // currentWeekday = currentWeekday + 1;
     }
     
     let trailingBlanks = [];
@@ -97,16 +96,14 @@ export default class DaysInMonth extends React.Component{
   }
   
   isDayWithClass (classes, date) {
-    // console.log(JSON.stringify(classes));
     let month = moment().format('MM');
     let dateString = month + '-' +(date<10 ? '0' + date : date);
-    // console.log(dateString);
     let classDates = classes['dates'];  
     let flag = false;
   
     if (classDates.includes(dateString)){
       classes[dateString].forEach((session) => {
-        if (session['status'] < 10){
+        if (session['status'] < 15){
           flag = true;
         }
       });

@@ -19,6 +19,7 @@ import {
 import './closingDialog.css';
 import {registerStudent} from '../services/airtable';
 import moment from 'moment';
+import EmailSender from '../services/emailSender';
 
 
 export default class ClosingDialog extends React.Component {
@@ -30,11 +31,13 @@ export default class ClosingDialog extends React.Component {
       information: this.props.studentData,
       chosenClasses: {},
       finalClasses: this.props.totalClasses,
-      isLoading: false
+      isLoading: false,
+      formattedClasses: ''
     });
     this.handleClose = this.handleClose.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
+    this.emailSender = new EmailSender(this.props.studentData);
   }
 
   handleClose(){
@@ -43,7 +46,7 @@ export default class ClosingDialog extends React.Component {
 
   handleRegister(){
     this.setLoading();
-    this.updateChosenClasses();
+    let chosenClasses = this.updateChosenClasses();
     registerStudent({'studentData': this.state.information, 'chosenClasses': this.state.finalClasses}).then(() => {
       this.setState({
         ...this.state,
@@ -51,31 +54,42 @@ export default class ClosingDialog extends React.Component {
         isLoading: false
       });
     });
+    this.emailSender.sendEmail(chosenClasses);
   }
 
   updateChosenClasses(){
-    let dates = Object.keys(this.props.currentChosenClasses);
+    let dates = Object.keys(this.props.currentChosenClasses).sort();
     let tempDict = {};
     let temptemp = {...this.props.currentChosenClasses};
+    let formattedList = '<ul>';
+
 
     dates.forEach((date) => {
       let pickedClasses = [];
-
+      let tempSubList = '<ul>';
       temptemp[date].forEach((record) => {
         if (this.state.finalClasses.includes(record)){
           pickedClasses.push(record);
+          tempSubList = tempSubList + '<li style="text-align: left;">' + this.props.classMappings[record] + '</li>';
         }
       });
+      tempSubList = tempSubList + '</ul>';
 
       if (pickedClasses.length !== 0){
+        formattedList = formattedList + '<li style="text-align: left;">' + this.getParsedDay(date) + '</li>' + tempSubList;
         tempDict[date] = pickedClasses;
       }
     });
+    formattedList = formattedList + '</ul>';
+    console.log(formattedList);
 
     this.setState({
       ...this.state,
-      chosenClasses: tempDict
+      chosenClasses: tempDict,
+      formattedClasses: formattedList
     });
+
+    return formattedList;
   }
 
   setLoading(){
@@ -122,7 +136,6 @@ export default class ClosingDialog extends React.Component {
       str = str.substring(1);
     }
 
-    console.log(weekdayNames[((parsedDate-1) + firstWeekday) % 7] + ' ' + str);
     return (weekdayNames[((parsedDate-1) + firstWeekday) % 7] + ' ' + str);
   }
 
@@ -140,7 +153,7 @@ export default class ClosingDialog extends React.Component {
                 <DialogTitle id="form-dialog-closing">Review and Register</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    Verify the classes you would like to add, and uncheck the classes you want to remove. 
+                    Review your classes. Uncheck any classes you want to remove.                  
                   </DialogContentText>
                   <List>
                   {/* eslint-disable-next-line */}
@@ -175,7 +188,7 @@ export default class ClosingDialog extends React.Component {
                   </List>
                 </DialogContent>
                 <DialogActions>
-                  <Button variant = 'outlined' color="primary" onClick={this.handleClose}>
+                  <Button variant = 'outlined' color="secondary" onClick={this.handleClose}>
                     Go Back
                   </Button>
                   <Button variant = 'contained' onClick={this.handleRegister} color="primary">

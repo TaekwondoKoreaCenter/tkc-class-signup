@@ -9,27 +9,19 @@ import {
   Typography,
   Snackbar,
   Badge,
-  Toolbar
+  Toolbar,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import OpeningDialog from './openingDialog';
+import CloseIcon from '@material-ui/icons/Close';
 import HelpIcon from '@material-ui/icons/Help';
 import IconButton from '@material-ui/core/IconButton';
 import ClassTracker from '../services/classAddTracker';
 import ClosingDialog from './closingDialog';
-import { withStyles} from '@material-ui/core/styles';
-import { white } from 'material-ui/styles/colors';
-
-const WhiteButton = withStyles((theme) => ({
-  root: {
-    color: white,
-    backgroundColor: white[700],
-    '&:hover': {
-      backgroundColor: white[600],
-    },
-    borderColor: white
-  },
-}))(Button);
 
 export default class App extends React.Component {
   constructor(props){
@@ -44,12 +36,16 @@ export default class App extends React.Component {
       classMappings: {},
       errorCaught: false,
       totalClassCount: [],
-      addSuccess: false
+      addSuccess: false,
+      errorStatement: '',
+      helpClicked: false
     }
     this.classTracker = new ClassTracker();
     this.renderClosingDialog = this.renderClosingDialog.bind(this);
     this.handleErrorClose = this.handleErrorClose.bind(this);
     this.handleSuccessClose = this.handleSuccessClose.bind(this);
+    this.handleHelpDialogOpen = this.handleHelpDialogOpen.bind(this);
+    this.handleHelpDialogClose = this.handleHelpDialogClose.bind(this);
   }
 
   retrieveClassData(studentData){
@@ -118,6 +114,20 @@ export default class App extends React.Component {
     });
   }
 
+  handleHelpDialogOpen(){
+    this.setState({
+      ...this.state,
+      helpClicked: true
+    });
+  }
+
+  handleHelpDialogClose(){
+    this.setState({
+      ...this.state,
+      helpClicked: false
+    });
+  }
+
   renderCalendar(){
     return(
       <div>
@@ -152,14 +162,14 @@ export default class App extends React.Component {
             <Typography align = 'center' variant = 'h2'>
               TKC Class Sign-Up
             </Typography>
-            <IconButton>
+            <IconButton onClick={this.handleHelpDialogOpen}>
               <HelpIcon className = 'helpIcon'/>
             </IconButton>
             {/* { !this.state.closingDialogOpen && */}
               <Badge badgeContent={this.state.totalClassCount.length} color="secondary" invisible ={this.state.totalClassCount.length === 0 || this.state.closingDialogOpen}>
-                <WhiteButton variant = 'outlined' className = 'reviewButton' onClick = {this.renderClosingDialog}  disabled={this.state.totalClassCount.length === 0 || this.state.closingDialogOpen}>
+                <Button variant = 'outlined' color='primary' className = 'reviewButton' onClick = {this.renderClosingDialog}  disabled={this.state.totalClassCount.length === 0 || this.state.closingDialogOpen}>
                     Review and Register
-                </WhiteButton>
+                </Button>
               </Badge>
             {/* }  */}
           </Toolbar>
@@ -168,13 +178,14 @@ export default class App extends React.Component {
         {this.state.finishedSignin  &&
         <div className = "textGen">
           <p className="textBlurb">
-          Please choose desired dates, classes, and click Review and Register at the right top to complete registration. If you have a question or concern, please submit without conflicting classes and contact us at (630) 708-3132 or info@TKCUSA.com.
+            Select your desired classes below, and click "Review and Register" at the right top corner to complete registration.<br></br>
+            Note: 2 max classes per week for Basic Course and monthly members. 3 max classes per week for Black Belt Team and Instructor Course members.          
           </p>
         </div>}
 
         <Snackbar open={this.state.errorCaught} autoHideDuration={6000} onClose={this.handleErrorClose} >
           <MuiAlert variant='filled' onClose={this.handleErrorClose} severity="error">
-            Too many classes added! You can add up to {this.state.studentInfo['student_type'] === 'bbc'? 3 : 2} classes for each week.
+            Too many classes added! You can add up to {this.state.studentInfo['student_type'] === 'bbt'? 3 : 2} classes for each week.
           </MuiAlert>
         </Snackbar>
 
@@ -183,7 +194,19 @@ export default class App extends React.Component {
             Successfully updated!
           </MuiAlert>
         </Snackbar>
-
+        {this.state.helpClicked? <Dialog open = {this.state.helpClicked}>
+          <DialogTitle>
+            Need Help?
+            <IconButton className='closeIcon' edge = 'end' onClick={this.handleHelpDialogClose}>
+              <CloseIcon/>
+            </IconButton>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+            Please email us at info@TKCUSA.com or call us at (630) 708-3132 for issues. We will work together to complete your registration.
+            </DialogContentText>
+          </DialogContent>
+        </Dialog> : null}
         {(this.state.finishedSignin === false) ? this.renderDialog() : null}
         {(this.state.closingDialogOpen) ? <ClosingDialog open = {this.state.closingDialogOpen} handleClose = {() => {this.handleClosingDialog()}}studentData = {this.state.studentInfo} currentChosenClasses = {this.state.currentChosenClasses} totalClasses = {this.state.totalClassCount} classMappings = {this.state.classMappings}/>: null}
 

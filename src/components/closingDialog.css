@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-.MuiButton-outlined	.blueButton{
+.MuiButton-outlinedSecondary{
   border-color:  #1976d2 !important;
   color: #1976d2 !important;
 }

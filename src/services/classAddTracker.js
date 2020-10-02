@@ -40,8 +40,13 @@ export default class ClassTracker {
     //TODO: fix the math here
     let week = Math.floor((parsedDate + firstDayOfMonth())/7) + 1;
 
+    //TODO: fix this
     if (!Object.keys(this.allAddedClassesByWeek).includes(week.toString())){
-      this.allAddedClassesByWeek[week.toString()] = classes;
+      if (classes[date].length > this.classLimit){
+        return false;
+      } else {
+        this.allAddedClassesByWeek[week.toString()] = classes;
+      }
     } else {
       let temp = {...this.allAddedClassesByWeek[week.toString()]};
       temp[date] = classes[date];

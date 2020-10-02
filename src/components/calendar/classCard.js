@@ -41,7 +41,7 @@ export default class ClassCard extends React.Component {
           <Grid container direction='row' justify='space-between'>
             <Grid item>
               <div className = 'classStatus'>
-                {'Capacity: ' + session['status'] + "/10"}
+                {'Capacity: ' + session['status'] + "/15"}
               </div>
               {/* <Tooltip arrow = {true} title = {"Add all available " + dayOfWeek.toString() + " (" + session['time'][0].toString() + ") " + session['className'] + "es"}>
                 <FormControlLabel

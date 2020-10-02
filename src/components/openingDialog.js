@@ -106,7 +106,7 @@ export default class OpeningDialog extends React.Component {
           <DialogTitle id="form-dialog-title">Sign-in</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Sign-in with your information below to proceed to class registration.
+              Welcome to TKC Class Registration! Please sign-in.<br></br>Note: You must submit one registration for each student.
             </DialogContentText>
             <TextField
               // autoFocus="false"

@@ -20,7 +20,7 @@
   margin-left:203.73px !important;
 }
 
-.MuiButton-outlined{
+.MuiButton-outlinedPrimary{
   border-color: white !important;
   color: white !important;
 }
@@ -41,4 +41,11 @@
   font-family: BebasNeue;
   src: local('BebasNeue'), 
     url(../fonts/BebasNeue-Regular.ttf) format('truetype');
+}
+
+.closeIcon {
+  color: gray !important;
+  position: absolute !important;
+  right: 5px;
+  top: 5px;
 }
