@@ -9,6 +9,11 @@
   border: 1px solid darkgray;
 }
 
+.calendar-day.chosen-class {
+  background-color: #DCEDC8;
+  border: 2px solid #388e3c;
+}
+
 .calendar-day {
   font-size: 20px !important;
 }

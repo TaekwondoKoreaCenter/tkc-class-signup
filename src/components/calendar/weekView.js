@@ -51,7 +51,7 @@ export default class DaysInMonth extends React.Component{
       let result = this.isDayWithClass(classes, d.toString());
       if (result.length > 0){
         daysInMonth.push(
-          <td key={d} className={result[1].length > 0 ? "calendar-day class-day": "calendar-day no-class"} >
+          <td key={d} className={(result[1].length > 0) ? ((Object.keys(this.props.currentChosenClasses).includes(result[0]) && this.props.currentChosenClasses[result[0]].length > 0) ? "calendar-day chosen-class": "calendar-day class-day"): "calendar-day no-class"} >
             <DateButton onlyDate = {d} date = {result[0]} classesThisDay = {result[1]} dayOfWeek = {weekdayNames[((d-1) + currentWeekday) % 7]} chosenClasses={(classes) => this.handleChosenClasses(classes)} currentChosenClasses = {this.props.currentChosenClasses} />
           </td>
         );
