@@ -197,7 +197,7 @@ export default class App extends React.Component {
         {this.state.helpClicked? <Dialog open = {this.state.helpClicked}>
           <DialogTitle>
             Need Help?
-            <IconButton className='closeIcon' edge = 'end' onClick={this.handleHelpDialogClose}>
+            <IconButton className='closeIcon' onClick={this.handleHelpDialogClose}>
               <CloseIcon/>
             </IconButton>
           </DialogTitle>
