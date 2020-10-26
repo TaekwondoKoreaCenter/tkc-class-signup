@@ -25,11 +25,16 @@ export default class DaysInMonth extends React.Component{
   }
 
   renderDays(classes){
-    let dateObject1 = moment();
+
   
     let firstDayOfMonth = () => {
+      let dateObject1 = moment().add(7, 'd');
+      console.log(dateObject1);
       let dateObject = dateObject1.dateObject;
-      let firstDay = moment(dateObject).startOf('month').format('d');
+      console.log(dateObject);
+      let firstDay = dateObject1.startOf('month').format('d');
+      console.log(moment(dateObject).startOf('month'));
+      console.log(firstDay);
       return firstDay;
     }
     
@@ -47,7 +52,7 @@ export default class DaysInMonth extends React.Component{
     let currentWeekday = parseInt(firstDayOfMonth(), 10);
   
   
-    for (let d = 1; d <= 31; d++) {
+    for (let d = 1; d <= 30; d++) {
       let result = this.isDayWithClass(classes, d.toString());
       if (result.length > 0){
         daysInMonth.push(
@@ -96,7 +101,7 @@ export default class DaysInMonth extends React.Component{
   }
   
   isDayWithClass (classes, date) {
-    let month = moment().format('MM');
+    let month = moment().add(7, 'd').format('MM');
     let dateString = month + '-' +(date<10 ? '0' + date : date);
     let classDates = classes['dates'];  
     let flag = false;

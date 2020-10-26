@@ -11,7 +11,7 @@ let weekdayshortname = moment.weekdaysShort().map(day => {
   );
 });
 
-let dateObject1 = moment();
+let dateObject1 = moment().add(7, 'd');
 
 export default class CalendarView extends React.Component {
   state = {
