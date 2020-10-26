@@ -5,7 +5,7 @@ let API_KEY = 'keySCoKA0j0MYnttj';
 let base = new airtable({apiKey: API_KEY}).base('appFMfdHgnKfbwxmX');
 
 const bcClasses = ["Basic Class", "Family Class", "Demo Class"];
-const bbtIcClasses = ["Advanced Class", "Family Class", "Demo Class"]; 
+const bbtIcClasses = ["Basic Class", "Advanced Class", "Family Class", "Demo Class"]; 
 const otherClasses = ["Basic Class", "Family Class", "Demo Class", "Advanced Class"];
 
 export async function retrieveClassTypes(){
