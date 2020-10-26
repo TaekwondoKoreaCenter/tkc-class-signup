@@ -28,11 +28,10 @@ export default class ClassTracker {
 
   validateClassesAdded(classes) {
     let date = Object.keys(classes)[0];
-    let dateObject1 = moment();
   
     let firstDayOfMonth = () => {
-      let dateObject = dateObject1.dateObject;
-      let firstDay = moment(dateObject).startOf('month').format('d');
+      let dateObject1 = moment().add(7, 'd');
+      let firstDay = moment(dateObject1).startOf('month').format('d');
       return parseInt(firstDay);
     }
   

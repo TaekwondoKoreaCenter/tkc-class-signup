@@ -124,7 +124,7 @@ export default class ClosingDialog extends React.Component {
     let weekdayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   
     let firstDayOfMonth = () => {
-      let dateObject = moment().dateObject;
+      let dateObject = moment().add(7, 'd').dateObject;
       let firstDay = moment(dateObject).startOf('month').format('d');
       return parseInt(firstDay);
     }

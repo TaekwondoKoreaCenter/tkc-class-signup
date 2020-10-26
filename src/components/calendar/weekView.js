@@ -29,12 +29,7 @@ export default class DaysInMonth extends React.Component{
   
     let firstDayOfMonth = () => {
       let dateObject1 = moment().add(7, 'd');
-      console.log(dateObject1);
-      let dateObject = dateObject1.dateObject;
-      console.log(dateObject);
       let firstDay = dateObject1.startOf('month').format('d');
-      console.log(moment(dateObject).startOf('month'));
-      console.log(firstDay);
       return firstDay;
     }
     
