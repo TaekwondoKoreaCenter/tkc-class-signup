@@ -8,11 +8,7 @@ export default class ClassTracker {
   }
 
   setClassLimit(studentType){
-    if (studentType ==='bbt'){
-      this.classLimit = 3;
-    } else {
-      this.classLimit = 2;
-    }
+    this.classLimit = 1;
   }
 
   updateClasses(classes){

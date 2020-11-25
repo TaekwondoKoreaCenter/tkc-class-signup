@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  Card,
-  Grid,
-  CardContent,
+  // Card,
+  // Grid,
+  // CardContent,
   Button,
   // FormControlLabel,
   // Checkbox,
@@ -33,33 +33,33 @@ export default class ClassCard extends React.Component {
     const {clicked} = this.state;
 
     return(
-      <Card className = {clicked? 'cardClicked': 'cardUnClicked'}>
-        <CardContent>
-          <div className = 'cardHeader'>
-            {session['className'] + ' (' + session['time'][0].toString() + ')'}
-          </div>
-          <Grid container direction='row' justify='space-between'>
-            <Grid item>
-              <div className = 'classStatus'>
-                {'Capacity: ' + session['status'] + "/15"}
-              </div>
-              {/* <Tooltip arrow = {true} title = {"Add all available " + dayOfWeek.toString() + " (" + session['time'][0].toString() + ") " + session['className'] + "es"}>
-                <FormControlLabel
-                  value={1}
-                  control={<Checkbox name="checkedA" />}
-                  label="Add for month"
-                />
-              </Tooltip> */}
-            </Grid>
+      // <Card className = {clicked? 'cardClicked': 'cardUnClicked'}>
+      //   <CardContent>
+      //     <div className = 'cardHeader'>
+      //       {session['className'] + ' (' + session['time'][0].toString() + ')'}
+      //     </div>
+      //     <Grid container direction='row' justify='space-between'>
+      //       <Grid item>
+      //         <div className = 'classStatus'>
+      //           {'Capacity: ' + session['status'] + "/2"}
+      //         </div>
+      //         {/* <Tooltip arrow = {true} title = {"Add all available " + dayOfWeek.toString() + " (" + session['time'][0].toString() + ") " + session['className'] + "es"}>
+      //           <FormControlLabel
+      //             value={1}
+      //             control={<Checkbox name="checkedA" />}
+      //             label="Add for month"
+      //           />
+      //         </Tooltip> */}
+      //       </Grid>
             
-            <Grid item>
+      //       <Grid item>
               <Button variant = 'contained' disableElevation color = {clicked? 'secondary':'primary'} onClick={() => {this.handleAddClass(session['classId'])}} className='classCardButton'> 
-                {clicked? "X": "Add"}
+                {session['time'][0].toString()}
               </Button> 
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
+    //         </Grid>
+    //       </Grid>
+    //     </CardContent>
+    //   </Card>
     );
   }
 }

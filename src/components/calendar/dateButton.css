@@ -29,7 +29,7 @@
 .MuiDrawer-paper {
   border-left: 1px solid rgba(0, 0, 0, 0.12) !important;
   padding: 10px;
-  width: 350px !important;
+  width: 320px !important;
 }
 
 .cardHeader {
@@ -52,4 +52,12 @@
 
 .MuiCardContent-root:last-child{
   padding-bottom: 16px !important;
+}
+
+.selectButton {
+  width: 100%;
+}
+
+.buttonDiv {
+  padding-top: 20px;
 }

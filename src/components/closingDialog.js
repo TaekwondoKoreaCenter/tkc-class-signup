@@ -54,6 +54,7 @@ export default class ClosingDialog extends React.Component {
         isLoading: false
       });
     });
+    this.props.handleRegister();
     this.emailSender.sendEmail(chosenClasses);
   }
 
@@ -145,16 +146,14 @@ export default class ClosingDialog extends React.Component {
 
     return(
       <div>
-        <Toolbar className='drawerTop'/>
-        <Dialog fullScreen = {true} open={this.state.open} aria-labelledby="form-dialog-title">
             {!this.state.finishedRegister && 
               <div className = 'dialogContentWrapper'>
-
-                <DialogTitle id="form-dialog-closing">Review and Register</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
+                  <Typography variant='h5' className='bottomPadding'>
+                    Review and Register
+                  </Typography>
+                  <Typography variant='body1' align='left'>
                     Review your classes. Uncheck any classes you want to remove.                  
-                  </DialogContentText>
+                  </Typography>
                   <List>
                   {/* eslint-disable-next-line */}
                     {dates.map((date) => {
@@ -186,22 +185,24 @@ export default class ClosingDialog extends React.Component {
                       }
                     })}
                   </List>
-                </DialogContent>
-                <DialogActions>
-                  <Button variant = 'outlined' color="secondary" onClick={this.handleClose}>
-                    Go Back
-                  </Button>
-                  <Button variant = 'contained' onClick={this.handleRegister} color="primary">
-                    Register
-                  </Button>
-                </DialogActions> 
+                  <div className='bottomPadding'/>
+
+                  <div className = 'buttons'>
+                    <Button variant = 'outlined' color="secondary" onClick={this.handleClose}>
+                      Go Back
+                    </Button>
+                    <Button variant = 'contained' onClick={this.handleRegister} color="primary">
+                      Register
+                    </Button>
+                  </div>
               </div>
             }
             {this.state.finishedRegister && 
               <div className = 'dialogContentWrapper'>
-                <DialogTitle id="form-dialog-finish-register">Thank You for Registering</DialogTitle>
-                <DialogContent>
-                  <Typography variant='body1'>
+                  <Typography variant='h5' className='bottomPadding'>
+                    Registration Confirmation
+                  </Typography>
+                  <Typography variant='body1' align='left'>
                     You have signed up for:
                   </Typography>
                   <List>
@@ -229,16 +230,15 @@ export default class ClosingDialog extends React.Component {
                       }
                     })}
                   </List>
+                  <div className='bottomPadding'/>
                   <Typography variant='body1'>
                     Check email for your confirmation. <b>COVID-19 Notice:</b> Every student and parent entering our dojang will be required to wear a mask over nose and mouth and be temperature checked for the safety of fellow students, parents, and staff.
                   </Typography>
-                </DialogContent>
               </div>
             }
           <div>
             {this.state.isLoading? <CircularProgress /> : null}
           </div>
-        </Dialog>
       </div>
     );
   }

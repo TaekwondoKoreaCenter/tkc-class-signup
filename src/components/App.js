@@ -13,7 +13,10 @@ import {
   Dialog,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  Stepper,
+  Step,
+  StepLabel
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import OpeningDialog from './openingDialog';
@@ -38,7 +41,8 @@ export default class App extends React.Component {
       totalClassCount: [],
       addSuccess: false,
       errorStatement: '',
-      helpClicked: false
+      helpClicked: false,
+      currentStep: 0
     }
     this.classTracker = new ClassTracker();
     this.renderClosingDialog = this.renderClosingDialog.bind(this);
@@ -110,7 +114,8 @@ export default class App extends React.Component {
   handleClosingDialog(){
     this.setState({
       ...this.state,
-      closingDialogOpen: false
+      closingDialogOpen: false,
+      currentStep: 0
     });
   }
 
@@ -125,6 +130,13 @@ export default class App extends React.Component {
     this.setState({
       ...this.state,
       helpClicked: false
+    });
+  }
+
+  handleRegister(){
+    this.setState({
+      ...this.state,
+      currentStep: 2
     });
   }
 
@@ -147,15 +159,17 @@ export default class App extends React.Component {
   renderClosingDialog() {
     this.setState({
       ...this.state,
-      closingDialogOpen: true
+      closingDialogOpen: true,
+      currentStep: 1
     });
   }
 
   render(){
+    const steps = ['Select classes', 'Review added classes', 'Finish registration'];
     return (
       <div className="App">
-        <AppBar position = 'sticky'> 
-          <Toolbar>
+        <AppBar position = 'sticky' elevation = {0}> 
+          <Toolbar >
             {/* <Typography align = 'left' variant = 'h6'>
               {this.state.studentInfo['name']}
             </Typography> */}
@@ -176,16 +190,26 @@ export default class App extends React.Component {
         </AppBar>  
 
         {this.state.finishedSignin  &&
+          <Stepper activeStep={this.state.currentStep} alternativeLabel>
+            {steps.map((label) => {
+              return(<Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>)
+            })}
+          </Stepper>
+        }
+        {/* {this.state.finishedSignin  &&
         <div className = "textGen">
           <p className="textBlurb">
             Select your desired classes below, and click "Review and Register" at the right top corner to complete registration.<br></br>
             Note: 2 max classes per week for Basic Course and monthly members. 3 max classes per week for Black Belt Team and Instructor Course members.          
           </p>
-        </div>}
+        </div>} */}
 
         <Snackbar open={this.state.errorCaught} autoHideDuration={6000} onClose={this.handleErrorClose} >
           <MuiAlert variant='filled' onClose={this.handleErrorClose} severity="error">
-            Too many classes added! You can add up to {this.state.studentInfo['student_type'] === 'bbt'? 3 : 2} classes for each week.
+            {/* Too many classes added! You can add up to {this.state.studentInfo['student_type'] === 'bbt'? 3 : 2} classes for each week. */}
+            Too many classes added! You can add up to 1 class per week.
           </MuiAlert>
         </Snackbar>
 
@@ -208,10 +232,10 @@ export default class App extends React.Component {
           </DialogContent>
         </Dialog> : null}
         {(this.state.finishedSignin === false) ? this.renderDialog() : null}
-        {(this.state.closingDialogOpen) ? <ClosingDialog open = {this.state.closingDialogOpen} handleClose = {() => {this.handleClosingDialog()}}studentData = {this.state.studentInfo} currentChosenClasses = {this.state.currentChosenClasses} totalClasses = {this.state.totalClassCount} classMappings = {this.state.classMappings}/>: null}
+        {(this.state.closingDialogOpen) ? <ClosingDialog open = {this.state.closingDialogOpen} handleClose = {() => {this.handleClosingDialog()}}studentData = {this.state.studentInfo} currentChosenClasses = {this.state.currentChosenClasses} totalClasses = {this.state.totalClassCount} classMappings = {this.state.classMappings} handleRegister = {() => this.handleRegister()}/>: null}
 
         <div>
-          {!this.state.finishedSignin ? null :
+          {!this.state.finishedSignin || this.state.closingDialogOpen? null :
             this.state.isLoading? <CircularProgress /> : this.renderCalendar()
           }
         </div>

@@ -7,9 +7,9 @@
   color: grey;
 }
 
-.MuiIButton-containedSecondary {
-  color:red !important;
-  border-color: red !important;
+.MuiButton-containedSecondary {
+  background-color: darkblue !important;
+  border-color: darkblue !important;
 }
 
 .MuiCard-root.cardClicked {
@@ -27,4 +27,9 @@
 
 .MuiTooltip-tooltip	{
   font-size: 14px !important;
+}
+
+.classCardButton {
+  width: 100%;
+  align-self: center;
 }

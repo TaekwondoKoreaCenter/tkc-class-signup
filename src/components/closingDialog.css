@@ -5,14 +5,15 @@
 .dialogContentWrapper{
   padding-left: 25%;
   padding-right: 25%;
-  padding-top: 72px;
+  padding-top: 15px;
   align-content: center;
-  justify-content: center;
+  justify-content: left;
 }
 
 .MuiButton-outlinedSecondary{
   border-color:  #1976d2 !important;
   color: #1976d2 !important;
+  margin-right: 5px !important;
 }
 
 .MuiListItemText-primary{
@@ -21,4 +22,14 @@
 
 .MuiListItemText-secondary{
   color:black !important;
+}
+
+.bottomPadding{
+  padding-bottom: 25px;
+}
+
+.buttons{
+  margin-left: auto;
+  margin-right: 0;
+  padding: 5px;
 }

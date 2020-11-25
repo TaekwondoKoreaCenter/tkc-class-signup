@@ -106,13 +106,13 @@ export default class OpeningDialog extends React.Component {
           <DialogTitle id="form-dialog-title">Sign-in</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Welcome to TKC Class Registration! Please sign-in.<br></br>Note: You must submit one registration for each student.
+              Welcome to TKC Class Registration! Please sign-in. <br></br>Note: Each household counts as one participant, so please list each member of the household below.
             </DialogContentText>
             <TextField
               // autoFocus="false"
               margin="normal"
               id="name"
-              label="Name of Student"
+              label="Name(s) of Participants"
               type="text"
               required
               fullWidth
@@ -130,14 +130,17 @@ export default class OpeningDialog extends React.Component {
               error = {emailError}
               onChange = {event => this.setEmail(event.target.value)}
             />
-            <div className = 'labelPadding'>
+            <DialogContentText>
+              Due to the recent COVID-19 restrictions blah blah blah blah blah blah blah blah blah blah 
+            </DialogContentText>
+            {/* <div className = 'labelPadding'>
               <FormLabel>Course Type</FormLabel>
             </div>
             <RadioGroup aria-label="studenttype" name="studenttype" onChange={this.handleChange}>
-              <FormControlLabel value="bc" control={<Radio />} label="Basic Course" />
-              <FormControlLabel value="bbt" control={<Radio />} label="Black Belt Team/Instructor Course" />
+              <FormControlLabel value="bc" control={<Radio />} label="Basic Belts" />
+              <FormControlLabel value="bbt" control={<Radio />} label="Advance Belts" />
               <FormControlLabel value="other" control={<Radio />} label="N/A" />
-            </RadioGroup>
+            </RadioGroup> */}
           </DialogContent>
           <DialogActions>
             <Button variant = 'contained' onClick={this.handleClose} color="primary">

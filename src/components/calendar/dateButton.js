@@ -99,7 +99,7 @@ export default class DateButton extends React.Component{
           <Toolbar className='drawerTop'/>
           <div>
             <div className = 'dateHeader'>
-                {dayOfWeek + ' ' + date} 
+                {dayOfWeek + ' (' + date +')'} 
             </div>
             <div className = 'scrollCards'> 
             { classes.map((session) => {
@@ -112,14 +112,14 @@ export default class DateButton extends React.Component{
             }
             </div>
           </div>
-          <div>
+          <div className='buttonDiv'>
             {
               !updated?  
-                <Button variant='contained' disabled>
-                  Confirm
+                <Button variant='outlined' disabled className='selectButton'>
+                  Select
                 </Button> :
-                  <Button variant='contained' color='primary' onClick = {this.handleChosenClasses}>
-                    Confirm
+                  <Button variant='outlined' color="secondary" onClick = {this.handleChosenClasses} className='selectButton'>
+                    Select
                   </Button> 
             }
           </div>
