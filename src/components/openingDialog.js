@@ -106,7 +106,7 @@ export default class OpeningDialog extends React.Component {
           <DialogTitle id="form-dialog-title">Sign-in</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Welcome to TKC Class Registration! Please sign-in. <br></br>Note: Each household counts as one participant, so please list each member of the household below.
+             Welcome to TKC Class Registration! Please sign-in. <br></br>Change Notice: Each household counts as one participant. Please list each participating member of the household below.
             </DialogContentText>
             <TextField
               // autoFocus="false"
@@ -131,7 +131,7 @@ export default class OpeningDialog extends React.Component {
               onChange = {event => this.setEmail(event.target.value)}
             />
             <DialogContentText>
-              Due to the recent COVID-19 restrictions blah blah blah blah blah blah blah blah blah blah 
+              All students will be participating in 1 private class and 1 online class per week.
             </DialogContentText>
             {/* <div className = 'labelPadding'>
               <FormLabel>Course Type</FormLabel>
