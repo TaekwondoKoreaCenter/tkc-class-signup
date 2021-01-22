@@ -209,7 +209,7 @@ export default class App extends React.Component {
         <Snackbar open={this.state.errorCaught} autoHideDuration={6000} onClose={this.handleErrorClose} >
           <MuiAlert variant='filled' onClose={this.handleErrorClose} severity="error">
             {/* Too many classes added! You can add up to {this.state.studentInfo['student_type'] === 'bbt'? 3 : 2} classes for each week. */}
-            Too many classes added! You can add up to 1 class per week.
+            Too many classes added! You can add up to 2 class per week.
           </MuiAlert>
         </Snackbar>
 

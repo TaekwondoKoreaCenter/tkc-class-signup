@@ -8,7 +8,7 @@ export default class ClassTracker {
   }
 
   setClassLimit(studentType){
-    this.classLimit = 1;
+    this.classLimit = 2;
   }
 
   updateClasses(classes){

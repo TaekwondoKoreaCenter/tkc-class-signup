@@ -4,6 +4,7 @@ import {
   // Grid,
   // CardContent,
   Button,
+  Box
   // FormControlLabel,
   // Checkbox,
   // Tooltip
@@ -53,8 +54,18 @@ export default class ClassCard extends React.Component {
       //       </Grid>
             
       //       <Grid item>
-              <Button variant = 'contained' disableElevation color = {clicked? 'secondary':'primary'} onClick={() => {this.handleAddClass(session['classId'])}} className='classCardButton'> 
-                {session['time'][0].toString()}
+              <Button size='large' variant = 'contained' disableElevation color = {clicked? 'secondary':'primary'} onClick={() => {this.handleAddClass(session['classId'])}} className='classCardButton'> 
+                <Box display='flex' className='containerBox'>
+                  <Box flexShrink={1} className='timeBox'> 
+                    {session['time'][0].toString()}                  
+                  </Box>
+                  <Box flexShrink={1} className='nameBox'>
+                    {session['className']}
+                  </Box>
+                  <Box display='flex' flexGrow={2} className='capacityBox' alignItems='flex-end'>
+                    {session['status'] + "/15"}
+                  </Box>
+                </Box>
               </Button> 
     //         </Grid>
     //       </Grid>

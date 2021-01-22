@@ -32,4 +32,28 @@
 .classCardButton {
   width: 100%;
   align-self: center;
+  justify-content: space-between;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.containerBox{
+  width: 100% !important;
+}
+
+.timeBox {
+  padding-right: 5px;
+}
+
+.nameBox {
+  font-weight: bold;
+}
+
+.capacityBox {
+  justify-content: flex-end;
 }
