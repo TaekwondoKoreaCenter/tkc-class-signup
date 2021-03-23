@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import CalendarView from './calendar/calendarView';
 import {retrieveAllClasses} from '../services/airtable';
 import {
@@ -25,6 +24,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import IconButton from '@material-ui/core/IconButton';
 import ClassTracker from '../services/classAddTracker';
 import ClosingDialog from './closingDialog';
+import '../styles/App.css';
 
 export default class App extends React.Component {
   constructor(props){

@@ -1,22 +1,22 @@
 import React from 'react';
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
+  // Dialog,
+  // DialogTitle,
+  // DialogContent,
+  // DialogContentText,
+  // DialogActions,
   Divider,
   Button,
   List,
   ListItem,
-  Toolbar,
+  // Toolbar,
   ListItemText,
   ListItemSecondaryAction,
   Checkbox,
   CircularProgress,
   Typography
 } from '@material-ui/core';
-import './closingDialog.css';
+import '../styles/closingDialog.css';
 import {registerStudent} from '../services/airtable';
 import moment from 'moment';
 import EmailSender from '../services/emailSender';

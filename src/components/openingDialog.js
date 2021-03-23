@@ -12,7 +12,7 @@ import {
   FormControlLabel,
   FormLabel
 } from '@material-ui/core';
-import './openingDialog.css';
+import '../styles/openingDialog.css';
 
 
 export default class OpeningDialog extends React.Component {
