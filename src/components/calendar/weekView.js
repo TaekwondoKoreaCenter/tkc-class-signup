@@ -103,7 +103,7 @@ export default class DaysInMonth extends React.Component{
   
     if (classDates.includes(dateString)){
       classes[dateString].forEach((session) => {
-        if (session['status'] < 15){
+        if (session['status'] < 20){
           flag = true;
         }
       });
